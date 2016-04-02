@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{1249A06E-032E-4611-8749-E48CB5FCFF68}</ProjectGuid>
     <RootNamespace>A04s_3DShapes</RootNamespace>
-    <ProjectName>A04s_3DShapes_DEMO</ProjectName>
+    <ProjectName>A08_CameraClass</ProjectName>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
