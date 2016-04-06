@@ -1,31 +1,34 @@
-#ifndef __CAMERACLASS_H_
-#define __CAMERACLASS_H_
+#ifndef __SingletonCamera_H_
+#define __SingletonCamera_H_
 
 #include "RE\ReEngAppClass.h"
 
 using namespace ReEng;
 #include <SFML\Graphics.hpp>
 
-class CameraClass : public ReEngAppClass 
+class SingletonCamera
 {
 public:
-	typedef ReEngAppClass super;
+	static SingletonCamera* m_camera;
 
-	static CameraClass& getInstance()
+	static SingletonCamera* GetInstance()
 	{
-		static CameraClass instance;
+		if (m_camera == nullptr)
+		{
+			m_camera = new SingletonCamera();
+		}
 
-		return instance;
+		return m_camera;
 	}
 
-	~CameraClass() {};
-	CameraClass(CameraClass const&) = delete;
-	void operator=(CameraClass const&) = delete;
-private:
-	CameraClass() {};
-
-	CameraClass(CameraClass const&);
-	void operator=(const CameraClass& other);
+	static void ReleaseInstance()
+	{
+		if (m_camera != nullptr)
+		{
+			delete m_camera;
+			m_camera = nullptr;
+		}
+	}
 
 	matrix4 GetView(void); //Should get the View Matrix from your singleton
 	matrix4 GetProjection(bool bOrtographic); //Should get the Projection Matrix from your singleton, this function should let me choose between a Perspective or an Orthographic projection depending on the bool argument.
@@ -39,5 +42,21 @@ private:
 	void ChangeRoll(float fIncrement);//Orient your camera (meaning the forward and up vectors) changing its angle in z
 	void ChangeYaw(float fIncrement);//Orient your camera (meaning the forward and up vectors) changing its angle in y
 
+private:
+	SingletonCamera();
+	~SingletonCamera() {};
+
+	matrix4 m_viewMatrix = matrix4(1.0f);
+	matrix4 m_projectionMatrix = matrix4(1.0f);
+
+	vector3 m_position = vector3(0.0f, 0.0f, 5.0f);
+	vector3 m_target = vector3(0.0f, 0.0f, 0.0f);
+	vector3 m_up = vector3(0.0f, 1.0f, 0.0f);
+	
+	//glm::quat m_orientation;
+	glm::quat m_orientation;
+
+	void Update();
 };
-#endif //__CAMERACLASS_H_
+
+#endif //__SingletonCamera_H_

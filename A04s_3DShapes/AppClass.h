@@ -8,12 +8,15 @@ Date: 2015/09
 #include "RE\ReEngAppClass.h"
 #include <SFML\Graphics.hpp>
 #include "MyPrimitive.h"
+#include "SingletonCamera.h"
 
 using namespace ReEng; //Using ReEng namespace to use all the classes in the dll
 
 class AppClass : public ReEngAppClass
 {
 	MyPrimitive* m_pPrimitive = nullptr;
+
+	SingletonCamera* m_camera;
 public:
 	typedef ReEngAppClass super;
 	/*
@@ -88,6 +91,14 @@ public:
 	OUTPUT: ---
 	*/
 	virtual void Release(void) final;
+
+	/*
+	USAGE: Manages the rotation of the camera a_fSpeed is a factor of change DO NOT OVERRIDE
+	ARGUMENTS:
+	- float a_fSpeed = 0.005f
+	OUTPUT: ---
+	*/
+	virtual void MyCameraRotation(float a_fSpeed = 0.005f) final;
 };
 
 #endif //__APPLICATION_H_

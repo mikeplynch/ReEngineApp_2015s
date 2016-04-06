@@ -1,7 +1,8 @@
 #include "AppClass.h"
+#include "SingletonCamera.h"
 void AppClass::InitWindow(String a_sWindowName)
 {
-	super::InitWindow("3D Shapes"); // Window Name
+	super::InitWindow("A08 - Camera Singleton"); // Window Name
 }
 
 void AppClass::InitVariables(void)
@@ -13,6 +14,8 @@ void AppClass::InitVariables(void)
 	m_pPrimitive->GenerateCylinder(1.0f, 2.0f, 7, REBLUE);
 	m_pPrimitive->GenerateTube(1.0f, 0.7f, 2.0f, 7, REYELLOW);
 	m_pPrimitive->GenerateSphere(1.0f, 3, RERED);
+
+	m_camera = SingletonCamera::GetInstance();
 }
 
 void AppClass::Update(void)
@@ -25,7 +28,7 @@ void AppClass::Update(void)
 
 	//First person camera movement
 	if (m_bFPC == true)
-		CameraRotation();
+		MyCameraRotation();
 
 	//Call the arcball method
 	ArcBall();
@@ -65,7 +68,7 @@ void AppClass::Display(void)
 		break;
 	}
 
-	m_pPrimitive->Render(m_pCameraMngr->GetProjectionMatrix(), m_pCameraMngr->GetViewMatrix(), ToMatrix4(m_qArcBall));
+	m_pPrimitive->Render(m_camera->GetProjection(false), m_camera->GetView(), ToMatrix4(m_qArcBall));
 	
 	m_pMeshMngr->Render(); //renders the render list
 
@@ -76,4 +79,50 @@ void AppClass::Release(void)
 {
 	SafeDelete(m_pPrimitive); //Release the shape
 	super::Release(); //release the memory of the inherited fields
+}
+
+void AppClass::MyCameraRotation(float a_fSpeed)
+{
+	UINT	MouseX, MouseY;		// Coordinates for the mouse
+	UINT	CenterX, CenterY;	// Coordinates for the center of the screen.
+
+								//Initialize the position of the pointer to the middle of the screen
+	CenterX = m_pSystem->GetWindowX() + m_pSystem->GetWindowWidth() / 2;
+	CenterY = m_pSystem->GetWindowY() + m_pSystem->GetWindowHeight() / 2;
+
+	//Calculate the position of the mouse and store it
+	POINT pt;
+	GetCursorPos(&pt);
+	MouseX = pt.x;
+	MouseY = pt.y;
+
+	//Calculate the difference in view with the angle
+	float fAngleX = 0.0f;
+	float fAngleY = 0.0f;
+	float fDeltaMouse = 0.0f;
+	if (MouseX < CenterX)
+	{
+		fDeltaMouse = static_cast<float>(CenterX - MouseX);
+		fAngleY += fDeltaMouse * a_fSpeed;
+	}
+	else if (MouseX > CenterX)
+	{
+		fDeltaMouse = static_cast<float>(MouseX - CenterX);
+		fAngleY -= fDeltaMouse * a_fSpeed;
+	}
+
+	if (MouseY < CenterY)
+	{
+		fDeltaMouse = static_cast<float>(CenterY - MouseY);
+		fAngleX -= fDeltaMouse * a_fSpeed;
+	}
+	else if (MouseY > CenterY)
+	{
+		fDeltaMouse = static_cast<float>(MouseY - CenterY);
+		fAngleX += fDeltaMouse * a_fSpeed;
+	}
+	//Change the Yaw and the Pitch of the camera
+	m_camera->ChangeYaw(fAngleY * 3.0f);
+	m_camera->ChangePitch(-fAngleX * 3.0f);
+	SetCursorPos(CenterX, CenterY);//Position the mouse in the center
 }
