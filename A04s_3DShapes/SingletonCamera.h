@@ -2,7 +2,9 @@
 #define __SingletonCamera_H_
 
 #include "RE\ReEngAppClass.h"
+
 using namespace ReEng;
+
 #include <SFML\Graphics.hpp>
 
 class SingletonCamera
@@ -29,7 +31,10 @@ public:
 		}
 	}
 
-	matrix4 GetView(void); //Should get the View Matrix from your singleton
+	matrix4 GetView(void)
+	{
+		return m_viewMatrix = glm::lookAt(m_position, m_target, m_up);
+	} //Should get the View Matrix from your singleton
 	matrix4 GetProjection(bool bOrtographic); //Should get the Projection Matrix from your singleton, this function should let me choose between a Perspective or an Orthographic projection depending on the bool argument.
 	void SetPosition(vector3 v3Position);//Sets the position of the camera
 	void SetTarget(vector3 v3Target);//Sets the target of the camera
@@ -52,7 +57,7 @@ private:
 	vector3 m_target = vector3(0.0f, 0.0f, 0.0f);
 	vector3 m_up = vector3(0.0f, 1.0f, 0.0f);
 	
-	glm::quat m_pitchYawRoll;
+	glm::quat m_qRotation;
 };
 
 #endif //__SingletonCamera_H_
