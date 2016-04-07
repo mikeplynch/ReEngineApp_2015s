@@ -57,6 +57,7 @@ private:
 	vector3 m_target = vector3(0.0f, 0.0f, 0.0f);
 	vector3 m_up = vector3(0.0f, 1.0f, 0.0f);
 	
+	vector3 m_v3PitchYawRoll = vector3(0.0f);
 	glm::quat m_qRotation;
 };
 

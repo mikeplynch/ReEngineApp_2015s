@@ -31,7 +31,7 @@ void AppClass::Update(void)
 		MyCameraRotation();
 
 	//Call the arcball method
-	ArcBall();
+	//ArcBall();
 
 	//Adds all loaded instance to the render list
 	m_pMeshMngr->AddInstanceToRenderList("ALL");
