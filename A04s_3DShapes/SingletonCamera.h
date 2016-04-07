@@ -2,7 +2,6 @@
 #define __SingletonCamera_H_
 
 #include "RE\ReEngAppClass.h"
-
 using namespace ReEng;
 #include <SFML\Graphics.hpp>
 
@@ -54,6 +53,7 @@ private:
 	vector3 m_up = vector3(0.0f, 1.0f, 0.0f);
 	
 	//glm::quat m_orientation;
+	glm::quat m_pitchYawRoll;
 	glm::quat m_orientation;
 
 	void Update();
