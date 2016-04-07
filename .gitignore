@@ -5,6 +5,7 @@ _Binary/01_Basics.cfg
 _Binary/01_BasicsD.cfg
 _Binary/ReEng_d.dll
 Z_DELETE
+Solution_VS15.VC.opendb
 
 # Compiled Object files
 *.slo
