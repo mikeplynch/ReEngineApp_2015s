@@ -68,12 +68,11 @@ void SingletonCamera::ChangePitch(float fIncrement)
 	//m_up = glm::eulerAngles(m_qRotation);
 	//m_target = glm::eulerAngles(m_qRotation);
 
-	vector3 fwd = m_target - m_position;
-	vector3 right = glm::cross(fwd, m_up);
+	vector3 fwd = glm::normalize(m_target - m_position);
+	vector3 right = glm::normalize(glm::cross(fwd, m_up));
 
-	m_qRotation = glm::toQuat(glm::rotate(glm::toMat4(m_qRotation), fIncrement, right));
-	m_up = right * m_qRotation;
-	m_target = REAXISZ * m_qRotation + m_position;
+	m_qRotation = glm::cross(m_qRotation, glm::angleAxis(fIncrement, right));
+	m_up = glm::rotate(m_qRotation, m_up);
 }
 
 void SingletonCamera::ChangeRoll(float fIncrement)
@@ -86,9 +85,10 @@ void SingletonCamera::ChangeRoll(float fIncrement)
 	//m_qRotation = glm::rotate(m_qRotation, fIncrement, REAXISY); // Although this is rotation on Z axis
 	//m_up = glm::eulerAngles(m_qRotation);
 
-	/*vector3 fwd = m_target - m_position;
-	m_qRotation = m_qRotation * glm::angleAxis(fIncrement, fwd);
-	m_up = m_qRotation * REAXISY;*/
+	vector3 fwd = glm::normalize(m_target - m_position);
+	m_qRotation = glm::cross(m_qRotation, glm::angleAxis(fIncrement, fwd));
+	m_up = glm::rotate(m_qRotation, m_up);
+
 }
 
 void SingletonCamera::ChangeYaw(float fIncrement)
@@ -103,6 +103,6 @@ void SingletonCamera::ChangeYaw(float fIncrement)
 	//m_target = glm::eulerAngles(m_qRotation);
 	//std::cout << m_target.x << m_target.y << m_target.z << std::endl;
 
-	/*m_qRotation = m_qRotation * glm::angleAxis(fIncrement, m_up);
-	m_target = REAXISZ * m_qRotation + m_position;*/
+	m_qRotation = glm::cross(m_qRotation, glm::angleAxis(fIncrement, m_up));
+	//m_target = REAXISZ * m_qRotation + m_position;
 }

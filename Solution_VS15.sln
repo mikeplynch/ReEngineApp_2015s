@@ -37,7 +37,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "E08_Gimbal_Lock", "E08_Gimb
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "E10_Projections", "E10_Projections\E10_Projections.vcxproj", "{9B6650A4-8EB9-4CBC-A25C-10726F0BD80D}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "A04s_3DShapes_DEMO", "A04s_3DShapes\A04s_3DShapes.vcxproj", "{1249A06E-032E-4611-8749-E48CB5FCFF68}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9A44C073-4510-4270-A70B-05D0391D7627}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "A08_CameraClass", "A08_CameraClass\A08_CameraClass.vcxproj", "{1249A06E-032E-4611-8749-E48CB5FCFF68}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
