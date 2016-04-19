@@ -36,3 +36,7 @@ Solution_VS15.VC.opendb
 *.app
 *.sdf
 *.opensdf
+<<<<<<< HEAD
+=======
+Solution_VS15.VC.db
+>>>>>>> upstream/master
